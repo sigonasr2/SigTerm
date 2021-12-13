@@ -1,0 +1,5 @@
+javac --release 8 src/sig/*.java -d bin
+cd bin
+jar cfe ../SigTerm.jar sig.SigTerm sig
+cd ..
+java -cp bin sig/SigTerm
