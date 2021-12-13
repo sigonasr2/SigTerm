@@ -5,7 +5,6 @@ import java.io.IOException;
 import org.jline.terminal.Terminal;
 
 public class SigTerm{
-	static Thread t;
 	static String storedVal="";
 	final static String ESC = "\u001b";
 	final static String CSI = "[";
@@ -117,6 +116,7 @@ public class SigTerm{
 	public static String RESETBACKGROUNDCOLOR = CSICODE+"49m";
 	public static String RESETUNDERLINECOLOR = CSICODE+"59m";
 	public static String MAGENTA = CSICODE+"35m";
+	public static String BLACK_BACKGROUND = CSICODE+"40m";
 	public static void Reset() {
 		System.out.print(CSICODE+"0m");
 	}
@@ -156,13 +156,10 @@ public class SigTerm{
 		CursorLineDown(1);
 		Text(DOUBLEUNDERLINE+"And this will not be bold"+RESET);
 		CursorLineDown(1);
-		BackgroundColor(233);
-		UnderlineColor(30);
-		Text(DIM+MAGENTA+"A little purple!");
+		Text(DIM+MAGENTA+BLACK_BACKGROUND+"A little purple!");
 		CursorLineDown(2);
 		CursorSetPosition(999999,1);
 		GetCursorPosition();
-		TextColor(70);
 		CursorSetPosition(1,8);
 		System.out.println(RESET);
 	}
