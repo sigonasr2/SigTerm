@@ -2,6 +2,8 @@ package sig;
 
 import java.io.IOException;
 
+import org.jline.terminal.Terminal;
+
 public class SigTerm{
 	static Thread t;
 	static String storedVal="";
@@ -92,19 +94,29 @@ public class SigTerm{
 	public static void UnderlineColor(int r,int g, int b) {
 		System.out.print(CSICODE+"58;2;"+r+";"+g+";"+b+"m");
 	}
-	/**Clears all formatting currently applied via Text Functions.**/public static String RESET = CSICODE+"0m";
-	/**Applies Bold.**/public static String BOLD = CSICODE+"1m";
-	/**Applies a faint effect to text.**/public static String DIM = CSICODE+"2m";
-	/**Applies Italics.**/public static String ITALIC = CSICODE+"3m";
-	/**Applies Underline.**/public static String UNDERLINE = CSICODE+"4m";
-	/**Applies Double Underline.**/public static String DOUBLEUNDERLINE = CSICODE+"21m";
-	/**Applies a slow blink.**/public static String BLINK = CSICODE+"5m";
-	/**Applies a rapid blink.**/public static String FASTBLINK = CSICODE+"6m";
-	/**Resets only the font.**/public static String RESETFONT = CSICODE+"10m";
-	/**Applies a strikeout.**/public static String STRIKE = CSICODE+"9m";
-	/**Resets only the text color.**/public static String RESETTEXTCOLOR = CSICODE+"39m";
-	/**Resets only the background color.**/public static String RESETBACKGROUNDCOLOR = CSICODE+"49m";
-	/**Resets only the underline color.**/public static String RESETUNDERLINECOLOR = CSICODE+"59m";
+	public static void TextColor(int id) {
+		System.out.print(CSICODE+"38;5;"+id+"m");
+	}
+	public static void BackgroundColor(int id) {
+		System.out.print(CSICODE+"48;5;"+id+"m");
+	}
+	public static void UnderlineColor(int id) {
+		System.out.print(CSICODE+"58;5;"+id+"m");
+	}
+	public static String RESET = CSICODE+"0m";
+	public static String BOLD = CSICODE+"1m";
+	public static String DIM = CSICODE+"2m";
+	public static String ITALIC = CSICODE+"3m";
+	public static String UNDERLINE = CSICODE+"4m";
+	public static String DOUBLEUNDERLINE = CSICODE+"21m";
+	public static String BLINK = CSICODE+"5m";
+	public static String FASTBLINK = CSICODE+"6m";
+	public static String RESETFONT = CSICODE+"10m";
+	public static String STRIKE = CSICODE+"9m";
+	public static String RESETTEXTCOLOR = CSICODE+"39m";
+	public static String RESETBACKGROUNDCOLOR = CSICODE+"49m";
+	public static String RESETUNDERLINECOLOR = CSICODE+"59m";
+	public static String MAGENTA = CSICODE+"35m";
 	public static void Reset() {
 		System.out.print(CSICODE+"0m");
 	}
@@ -142,24 +154,26 @@ public class SigTerm{
 		Text(BOLD+"But this text is here instead!");
 		Text(RESET);
 		CursorLineDown(1);
-		Text(DOUBLEUNDERLINE+"And this will not be bold");
+		Text(DOUBLEUNDERLINE+"And this will not be bold"+RESET);
 		CursorLineDown(1);
-		TextColor(175,75,255);
-		BackgroundColor(0,125,125);
-		UnderlineColor(255,0,0);
-		Text("A little purple!");
+		BackgroundColor(233);
+		UnderlineColor(30);
+		Text(DIM+MAGENTA+"A little purple!");
 		CursorLineDown(2);
 		CursorSetPosition(999999,1);
 		GetCursorPosition();
-		TextColor(0,255,0);
+		TextColor(70);
 		CursorSetPosition(1,8);
 		System.out.println(RESET);
 	}
 	
 	public static void main(String[] args) {
 		try {
-			System.out.println(org.jline.terminal.TerminalBuilder.terminal().getWidth()+"x"+org.jline.terminal.TerminalBuilder.terminal().getHeight()+" size detected.");
+			Terminal term = org.jline.terminal.TerminalBuilder.terminal();
+			System.out.println(term.getWidth()+"x"+term.getHeight()+" size detected.");
 			System.out.println("Done!");
+			RunTest();
+			term.close();
 		} catch (IOException e) {
 			
 		}
