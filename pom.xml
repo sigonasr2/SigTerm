@@ -17,12 +17,13 @@
   </properties>
 
   <dependencies>
-  <!-- https://mvnrepository.com/artifact/jline/jline -->
-	<dependency>
-		<groupId>jline</groupId>
-		<artifactId>jline</artifactId>
-		<version>3.0.0.M1</version>
-	</dependency>
+  <!-- https://mvnrepository.com/artifact/org.jline/jline -->
+<dependency>
+    <groupId>org.jline</groupId>
+    <artifactId>jline</artifactId>
+    <version>3.9.0</version>
+</dependency>
+
   </dependencies>
 
   <build>
@@ -30,6 +31,11 @@
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
       <plugins>
         <!-- clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->
+		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-plugin-plugin</artifactId>
+			<version>3.3</version>
+		  </plugin>
         <plugin>
           <artifactId>maven-clean-plugin</artifactId>
           <version>3.1.0</version>
@@ -70,6 +76,7 @@
         </plugin>
          <plugin>
         <artifactId>maven-assembly-plugin</artifactId>
+		<version>3.3.0</version>
         <configuration>
           <archive>
             <manifest>

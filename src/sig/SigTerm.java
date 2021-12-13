@@ -1,8 +1,6 @@
 package sig;
 
-import java.util.Scanner;
-import java.util.regex.Pattern;
-import org.jline.terminal.TerminalBuilder;
+import java.io.IOException;
 
 public class SigTerm{
 	static Thread t;
@@ -119,7 +117,8 @@ public class SigTerm{
 	public static void Text(String text) {
 		System.out.print(text);
 	}
-	public static void main(String[] args) {
+	
+	static void RunTest() {
 		EraseDisplay(2);
 		CursorUp(3);
 		Text("Test");		
@@ -151,10 +150,18 @@ public class SigTerm{
 		Text("A little purple!");
 		CursorLineDown(2);
 		CursorSetPosition(999999,1);
-		System.out.println(org.jline.terminal.TerminalBuilder.terminal().getWidth());
 		GetCursorPosition();
 		TextColor(0,255,0);
 		CursorSetPosition(1,8);
 		System.out.println(RESET);
+	}
+	
+	public static void main(String[] args) {
+		try {
+			System.out.println(org.jline.terminal.TerminalBuilder.terminal().getWidth());
+			System.out.println("Done!");
+		} catch (IOException e) {
+			
+		}
 	}
 }
