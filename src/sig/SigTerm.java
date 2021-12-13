@@ -1,6 +1,12 @@
 package sig;
 
+import java.util.Scanner;
+import java.util.regex.Pattern;
+import org.jline.terminal.TerminalBuilder;
+
 public class SigTerm{
+	static Thread t;
+	static String storedVal="";
 	final static String ESC = "\u001b";
 	final static String CSI = "[";
 	final static String CSICODE = ESC+CSI;
@@ -104,6 +110,9 @@ public class SigTerm{
 	public static void Reset() {
 		System.out.print(CSICODE+"0m");
 	}
+	public static void GetCursorPosition() {
+		System.out.print(CSICODE+"6n");
+	}
 	/**
 	Prints text to the console at the current cursor position.
 	**/
@@ -140,6 +149,12 @@ public class SigTerm{
 		BackgroundColor(0,125,125);
 		UnderlineColor(255,0,0);
 		Text("A little purple!");
+		CursorLineDown(2);
+		CursorSetPosition(999999,1);
+		System.out.println(org.jline.terminal.TerminalBuilder.terminal().getWidth());
+		GetCursorPosition();
+		TextColor(0,255,0);
+		CursorSetPosition(1,8);
 		System.out.println(RESET);
 	}
 }
