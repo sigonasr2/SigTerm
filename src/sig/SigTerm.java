@@ -80,15 +80,27 @@ public class SigTerm{
 		Sets the color of all following text to (r,g,b). Colors can be between 0-255.
 	**/
 	public static void TextColor(int r,int g, int b) {
-		System.out.print(CSICODE+"2;"+r+";"+g+";"+b+"m");
+		System.out.print(CSICODE+"38;2;"+r+";"+g+";"+b+"m");
+	}
+	public static void BackgroundColor(int r,int g, int b) {
+		System.out.print(CSICODE+"48;2;"+r+";"+g+";"+b+"m");
+	}
+	public static void UnderlineColor(int r,int g, int b) {
+		System.out.print(CSICODE+"58;2;"+r+";"+g+";"+b+"m");
 	}
 	/**Clears all formatting currently applied via Text Functions.**/public static String RESET = CSICODE+"0m";
 	/**Applies Bold.**/public static String BOLD = CSICODE+"1m";
 	/**Applies a faint effect to text.**/public static String DIM = CSICODE+"2m";
 	/**Applies Italics.**/public static String ITALIC = CSICODE+"3m";
 	/**Applies Underline.**/public static String UNDERLINE = CSICODE+"4m";
+	/**Applies Double Underline.**/public static String DOUBLEUNDERLINE = CSICODE+"21m";
 	/**Applies a slow blink.**/public static String BLINK = CSICODE+"5m";
 	/**Applies a rapid blink.**/public static String FASTBLINK = CSICODE+"6m";
+	/**Resets only the font.**/public static String RESETFONT = CSICODE+"10m";
+	/**Applies a strikeout.**/public static String STRIKE = CSICODE+"9m";
+	/**Resets only the text color.**/public static String RESETTEXTCOLOR = CSICODE+"39m";
+	/**Resets only the background color.**/public static String RESETBACKGROUNDCOLOR = CSICODE+"49m";
+	/**Resets only the underline color.**/public static String RESETUNDERLINECOLOR = CSICODE+"59m";
 	public static void Reset() {
 		System.out.print(CSICODE+"0m");
 	}
@@ -122,7 +134,12 @@ public class SigTerm{
 		Text(BOLD+"But this text is here instead!");
 		Text(RESET);
 		CursorLineDown(1);
-		Text(BLINK+"And this will not be bold");
-		System.out.println("");
+		Text(DOUBLEUNDERLINE+"And this will not be bold");
+		CursorLineDown(1);
+		TextColor(175,75,255);
+		BackgroundColor(0,125,125);
+		UnderlineColor(255,0,0);
+		Text("A little purple!");
+		System.out.println(RESET);
 	}
 }
