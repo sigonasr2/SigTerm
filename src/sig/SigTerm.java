@@ -158,7 +158,7 @@ public class SigTerm{
 	
 	public static void main(String[] args) {
 		try {
-			System.out.println(org.jline.terminal.TerminalBuilder.terminal().getWidth());
+			System.out.println(org.jline.terminal.TerminalBuilder.terminal().getWidth()+"x"+org.jline.terminal.TerminalBuilder.terminal().getHeight()+" size detected.");
 			System.out.println("Done!");
 		} catch (IOException e) {
 			
