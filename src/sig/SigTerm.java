@@ -168,6 +168,53 @@ public class SigTerm{
 		System.out.println(RESET);
 	}
 
+	static void HandleInput(NonBlockingReader r) {
+		try {
+			int ch = r.peek(250);
+			if (ch!=NonBlockingReader.READ_EXPIRED) {
+				if (!is27&&!is91&&ch==27) {
+					is27=true;
+				} else 
+				if (is27&&!is91&&ch==91) {
+					is91=true;
+				} else
+				if (is27&&is91) {
+					//Possible special code.
+					switch (ch) {
+						case 65:{
+							Text("UP");
+						}break;
+						case 66:{
+							Text("DOWN");
+						}break;
+						case 67:{
+							Text("RIGHT");
+						}break;
+						case 68:{
+							Text("LEFT");
+						}break;
+					}
+					is27=false;
+					is91=false;
+				} else
+				{
+					//Text(Integer.toString(ch));
+					is27=is91=false;
+				}
+					r.read();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	static void Run(NonBlockingReader r) {
+		while (RUNNING) {
+			HandleInput(r);
+			RefreshScreen();
+		}
+	}
+
 	static void RefreshScreen() {
 		CursorLineDown(1);
 		ScrollUp(1);
@@ -180,43 +227,8 @@ public class SigTerm{
 			NonBlockingReader r = term.reader();
 			System.out.println(term.getWidth()+"x"+term.getHeight()+" size detected.");
 			System.out.println("Done!");
-			RunTest();
-			while (RUNNING) {
-				int ch = r.peek(250);
-				if (ch!=NonBlockingReader.READ_EXPIRED) {
-					if (!is27&&!is91&&ch==27) {
-						is27=true;
-					} else 
-					if (is27&&!is91&&ch==91) {
-						is91=true;
-					} else
-					if (is27&&is91) {
-						//Possible special code.
-						switch (ch) {
-							case 65:{
-								Text("UP");
-							}break;
-							case 66:{
-								Text("DOWN");
-							}break;
-							case 67:{
-								Text("RIGHT");
-							}break;
-							case 68:{
-								Text("LEFT");
-							}break;
-						}
-						is27=false;
-						is91=false;
-					} else
-					{
-						//Text(Integer.toString(ch));
-						is27=is91=false;
-					}
-					r.read();
-				}
-				RefreshScreen();
-			}
+			//RunTest();
+			Run(r);
 			r.shutdown();
 			term.close();
 		} catch (IOException e) {
