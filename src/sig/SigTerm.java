@@ -9,6 +9,8 @@ import org.jline.utils.NonBlockingReader;
 public class SigTerm{
 	static boolean RUNNING=true;
 	static String storedVal="";
+	static boolean is27 = false;
+	static boolean is91 = false;
 	final static String ESC = "\u001b";
 	final static String CSI = "[";
 	final static String CSICODE = ESC+CSI;
@@ -165,6 +167,11 @@ public class SigTerm{
 		CursorSetPosition(1,8);
 		System.out.println(RESET);
 	}
+
+	static void RefreshScreen() {
+		CursorLineDown(1);
+		ScrollUp(1);
+	}
 	
 	public static void main(String[] args) {
 		try {
@@ -177,12 +184,38 @@ public class SigTerm{
 			while (RUNNING) {
 				int ch = r.peek(250);
 				if (ch!=NonBlockingReader.READ_EXPIRED) {
-					Text(Integer.toString(r.read()));
-				} else {
-					Text("...");
+					if (!is27&&!is91&&ch==27) {
+						is27=true;
+					} else 
+					if (is27&&!is91&&ch==91) {
+						is91=true;
+					} else
+					if (is27&&is91) {
+						//Possible special code.
+						switch (ch) {
+							case 65:{
+								Text("UP");
+							}break;
+							case 66:{
+								Text("DOWN");
+							}break;
+							case 67:{
+								Text("RIGHT");
+							}break;
+							case 68:{
+								Text("LEFT");
+							}break;
+						}
+						is27=false;
+						is91=false;
+					} else
+					{
+						//Text(Integer.toString(ch));
+						is27=is91=false;
+					}
+					r.read();
 				}
-				CursorLineDown(1);
-				ScrollUp(1);
+				RefreshScreen();
 			}
 			r.shutdown();
 			term.close();
