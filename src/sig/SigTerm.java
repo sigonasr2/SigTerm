@@ -1,10 +1,13 @@
 package sig;
 
 import java.io.IOException;
+import java.io.Reader;
 
 import org.jline.terminal.Terminal;
+import org.jline.utils.NonBlockingReader;
 
 public class SigTerm{
+	static boolean RUNNING=true;
 	static String storedVal="";
 	final static String ESC = "\u001b";
 	final static String CSI = "[";
@@ -159,7 +162,6 @@ public class SigTerm{
 		Text(DIM+MAGENTA+BLACK_BACKGROUND+"A little purple!");
 		CursorLineDown(2);
 		CursorSetPosition(999999,1);
-		GetCursorPosition();
 		CursorSetPosition(1,8);
 		System.out.println(RESET);
 	}
@@ -167,9 +169,22 @@ public class SigTerm{
 	public static void main(String[] args) {
 		try {
 			Terminal term = org.jline.terminal.TerminalBuilder.terminal();
+			term.enterRawMode();
+			NonBlockingReader r = term.reader();
 			System.out.println(term.getWidth()+"x"+term.getHeight()+" size detected.");
 			System.out.println("Done!");
 			RunTest();
+			while (RUNNING) {
+				int ch = r.peek(250);
+				if (ch!=NonBlockingReader.READ_EXPIRED) {
+					Text(Integer.toString(r.read()));
+				} else {
+					Text("...");
+				}
+				CursorLineDown(1);
+				ScrollUp(1);
+			}
+			r.shutdown();
 			term.close();
 		} catch (IOException e) {
 			
