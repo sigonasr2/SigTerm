@@ -120,8 +120,38 @@ public class SigTerm{
 	public static String RESETTEXTCOLOR = CSICODE+"39m";
 	public static String RESETBACKGROUNDCOLOR = CSICODE+"49m";
 	public static String RESETUNDERLINECOLOR = CSICODE+"59m";
+	public static String BLACK = CSICODE+"30m";
+	public static String RED = CSICODE+"31m";
+	public static String GREEN = CSICODE+"32m";
+	public static String YELLOW = CSICODE+"33m";
+	public static String BLUE = CSICODE+"34m";
 	public static String MAGENTA = CSICODE+"35m";
+	public static String CYAN = CSICODE+"36m";
+	public static String WHITE = CSICODE+"37m";
+	public static String BRIGHT_BLACK = CSICODE+"90m";
+	public static String BRIGHT_RED = CSICODE+"91m";
+	public static String BRIGHT_GREEN = CSICODE+"92m";
+	public static String BRIGHT_YELLOW = CSICODE+"93m";
+	public static String BRIGHT_BLUE = CSICODE+"94m";
+	public static String BRIGHT_MAGENTA = CSICODE+"95m";
+	public static String BRIGHT_CYAN = CSICODE+"96m";
+	public static String BRIGHT_WHITE = CSICODE+"97m";
 	public static String BLACK_BACKGROUND = CSICODE+"40m";
+	public static String RED_BACKGROUND = CSICODE+"41m";
+	public static String GREEN_BACKGROUND = CSICODE+"42m";
+	public static String YELLOW_BACKGROUND = CSICODE+"43m";
+	public static String BLUE_BACKGROUND = CSICODE+"44m";
+	public static String MAGENTA_BACKGROUND = CSICODE+"45m";
+	public static String CYAN_BACKGROUND = CSICODE+"46m";
+	public static String WHITE_BACKGROUND = CSICODE+"47m";
+	public static String BRIGHT_BLACK_BACKGROUND = CSICODE+"100m";
+	public static String BRIGHT_RED_BACKGROUND = CSICODE+"101m";
+	public static String BRIGHT_GREEN_BACKGROUND = CSICODE+"102m";
+	public static String BRIGHT_YELLOW_BACKGROUND = CSICODE+"103m";
+	public static String BRIGHT_BLUE_BACKGROUND = CSICODE+"104m";
+	public static String BRIGHT_MAGENTA_BACKGROUND = CSICODE+"105m";
+	public static String BRIGHT_CYAN_BACKGROUND = CSICODE+"106m";
+	public static String BRIGHT_WHITE_BACKGROUND = CSICODE+"107m";
 	public static void Reset() {
 		System.out.print(CSICODE+"0m");
 	}
@@ -161,7 +191,7 @@ public class SigTerm{
 		CursorLineDown(1);
 		Text(DOUBLEUNDERLINE+"And this will not be bold"+RESET);
 		CursorLineDown(1);
-		Text(DIM+MAGENTA+BLACK_BACKGROUND+"A little purple!");
+		Text(BOLD+BRIGHT_CYAN+BRIGHT_BLACK_BACKGROUND+"A little cyan!");
 		CursorLineDown(2);
 		CursorSetPosition(999999,1);
 		CursorSetPosition(1,8);
@@ -227,8 +257,8 @@ public class SigTerm{
 			NonBlockingReader r = term.reader();
 			System.out.println(term.getWidth()+"x"+term.getHeight()+" size detected.");
 			System.out.println("Done!");
-			//RunTest();
-			Run(r);
+			RunTest();
+			//Run(r);
 			r.shutdown();
 			term.close();
 		} catch (IOException e) {
