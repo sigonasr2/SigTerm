@@ -1,7 +1,6 @@
 package sig;
 
 import java.io.IOException;
-import java.io.Reader;
 
 import org.jline.terminal.Terminal;
 import org.jline.utils.NonBlockingReader;
@@ -191,7 +190,7 @@ public class SigTerm{
 		CursorLineDown(1);
 		Text(DOUBLEUNDERLINE+"And this will not be bold"+RESET);
 		CursorLineDown(1);
-		Text(BOLD+BRIGHT_CYAN+BRIGHT_BLACK_BACKGROUND+"A little cyan!");
+		Text(BRIGHT_CYAN+BRIGHT_BLACK_BACKGROUND+"A little cyan!");
 		CursorLineDown(2);
 		CursorSetPosition(999999,1);
 		CursorSetPosition(1,8);
@@ -257,8 +256,8 @@ public class SigTerm{
 			NonBlockingReader r = term.reader();
 			System.out.println(term.getWidth()+"x"+term.getHeight()+" size detected.");
 			System.out.println("Done!");
-			RunTest();
-			//Run(r);
+			//RunTest();
+			Run(r);
 			r.shutdown();
 			term.close();
 		} catch (IOException e) {
